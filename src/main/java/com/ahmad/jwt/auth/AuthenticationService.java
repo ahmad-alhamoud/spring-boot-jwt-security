@@ -9,6 +9,8 @@ import com.ahmad.jwt.user.TokenRepository;
 import com.ahmad.jwt.user.User;
 import com.ahmad.jwt.user.UserRepository;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,7 +55,6 @@ public class AuthenticationService {
 
         userRepository.save(user);
         sendValidationEmail(user);
-
 
     }
 
@@ -107,7 +108,9 @@ public class AuthenticationService {
         var user = ((User) auth.getPrincipal());
         claims.put("fullName", user.getFullName());
         var jwtToken = jwtService.generateToken(claims, user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
     }
 
 
@@ -126,4 +129,6 @@ public class AuthenticationService {
         savedToken.setValidatedAt(LocalDateTime.now());
         tokenRepository.save(savedToken);
     }
+
+
 }

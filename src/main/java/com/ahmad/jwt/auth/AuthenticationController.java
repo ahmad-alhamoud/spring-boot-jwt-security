@@ -2,6 +2,8 @@ package com.ahmad.jwt.auth;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,4 +38,5 @@ public class AuthenticationController {
     public void confirm(@RequestParam String token) throws MessagingException {
         service.activateAccount(token);
     }
+
 }
